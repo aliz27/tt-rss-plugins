@@ -4,7 +4,7 @@ class Af_Inline_Youtube extends Af_InlineFilter {
 		return array("Youtube");
 	}
 
-	function process(&$entry, &$doc, &$found, $debug) {
+	function process(&$article, &$entry, &$doc, &$found, &$inline, $debug) {
 		$matches = array();
 		if (preg_match("/youtube\.com\/v\/([\w-]+)/", $entry->getAttribute("href"), $matches) ||
 			preg_match("/youtube\.com\/.*?[\&\?]v=([\w-]+)/", $entry->getAttribute("href"), $matches) ||

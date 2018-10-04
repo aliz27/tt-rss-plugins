@@ -9,6 +9,48 @@ class Af_Inline extends Plugin {
 			"Inlines content from reddit. Based on af_comics, af_redditimgur and af_unburn.",
 			"aliz")
 
+	private function handle_as_image($doc, $entry, $image) {
+		$img = $doc->createElement('img');
+		$img->setAttribute("src", $image);
+		$paragraph = $doc->createElement('p');
+		$paragraph->appendChild($img);
+
+		$entry->parentNode->insertBefore($paragraph, $entry);
+	}
+
+	private function handle_as_video($doc, $entry, $source_stream, $poster_url = false, $debug = false) {
+		_debug("handle_as_video: $source_stream", $debug);
+
+		$video = $doc->createElement('video');
+		$video->setAttribute("autoplay", "1");
+		$video->setAttribute("controls", "1");
+		$video->setAttribute("preload", "auto");
+		$video->setAttribute("loop", "1");
+
+		if ($poster_url) $video->setAttribute("poster", $poster_url);
+
+		$source = $doc->createElement('source');
+		$source->setAttribute("src", $source_stream);
+		if (strpos($source_stream, "m3u8") !== FALSE) {
+			$source->setAttribute("type", "application/x-mpegURL");
+		} else {
+			$source->setAttribute("type", "video/mp4");
+		}
+
+		$video->appendChild($source);
+
+		$paragraph = $doc->createElement('p');
+		$paragraph->appendChild($video);
+
+		$entry->parentNode->insertBefore($paragraph, $entry);
+
+		$img = $doc->createElement('img');
+		$img->setAttribute("src",
+			"data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D");
+
+		$entry->parentNode->insertBefore($img, $entry);
+	}
+
 	function init($host) {
 		$this->host = $host;
 
@@ -32,7 +74,7 @@ class Af_Inline extends Plugin {
 
 				$filter = new $filter_name();
 
-				if (is_subclass_of($filter, "Af_CuzzFilter")) {
+				if (is_subclass_of($filter, "Af_InlineFilter")) {
 					array_push($this->filters, $filter);
 					array_push($names, $filter_name);
 				}
@@ -111,7 +153,20 @@ class Af_Inline extends Plugin {
 				}
 			}
 
-			$found = $this->inline_stuff($article, $doc, $xpath, $debug);
+			$found = false;
+			$entry = $xpath->query("(//a[text()='[link]'])")->item(0);
+
+			if (!$entry) { return; }
+			_debug("processing href: " . $entry->getAttribute("href"), $debug);
+
+			foreach ($this->filters as $f) {
+				if ($f->process($article, $entry, $doc, $found, $this, $debug))
+					break;
+			}
+
+			return $article;
+
+/*			$found = $this->inline_stuff($article, $doc, $xpath, $debug);
 
 			$node = $doc->getElementsByTagName('body')->item(0);
 
@@ -133,15 +188,7 @@ class Af_Inline extends Plugin {
 			}
 
 		}
-
-		return $article;
-
-		foreach ($this->filters as $f) {
-			if ($f->process($article))
-				break;
-		}
-
-		return $article;
+*/
 	}
 
 	function api_version() {
