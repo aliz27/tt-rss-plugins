@@ -90,11 +90,11 @@ class Af_Cuzz extends Plugin {
                                         }
                                 }
                         }
-		}
 
-		foreach ($this->filters as $f) {
-			if ($f->process($article))
-				break;
+			foreach ($this->filters as $f) {
+				if ($f->process($article))
+					break;
+			}
 		}
 
 		return $article;
