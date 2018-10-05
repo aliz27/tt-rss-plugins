@@ -182,14 +182,14 @@ class Af_Inline extends Plugin {
 				array_push($article["tags"], "notInlined");
 			}
 
-			if ($node && $found) {
-				$article["content"] = $doc->saveXML($node);
-			}
-
 			if ($found) {
 				$table = $doc->getElementsByTagName('td')->item(0);
 				if ($table)
 					$table->parentNode->removeChild($table);
+			}
+
+			if ($node && $found) {
+				$article["content"] = $doc->saveHTML($node);
 			}
 
 			return $article;
