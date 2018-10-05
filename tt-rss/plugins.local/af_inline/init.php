@@ -102,7 +102,7 @@ class Af_Inline extends Plugin {
 
 		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
 		foreach ($inlines as $inline) {
-			print "<li>$inlines</li>";
+			print "<li>$inline</li>";
 		}
 		print "</ul>";
 
