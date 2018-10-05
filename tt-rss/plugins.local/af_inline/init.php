@@ -258,9 +258,9 @@ class Af_Inline extends Plugin {
 			if ($node && $found) {
 				$article["content"] = $doc->saveHTML($node);
 			}
-
-			return $article;
 		}
+		return $article;
+
 	}
 
 	function api_version() {

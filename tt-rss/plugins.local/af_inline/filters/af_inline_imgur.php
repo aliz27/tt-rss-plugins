@@ -29,6 +29,7 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 				_debug("(imgur) image ".$url, $debug);
 				$inline->handle_as_image($doc, $entry, $url);
 				$found = true;
+				return true;
 			}
 
 			if (preg_match("/([A-Z0-9]+)\.(gif|gifv|mp4|webm)$/i", $url, $matches) ) {
@@ -40,10 +41,12 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 					_debug("(imgur) gif(v) mp4: ".$resp["data"]["mp4"], $debug);
 					$inline->handle_as_video($doc, $entry, $resp["data"]["mp4"], $resp["data"]["link"], $debug);
 					$found = "video";
+					return true;
 				} else {
 					_debug("(imgur) gif(v) gif: ".$resp["data"]["link"], $debug);
 					$inline->handle_as_image($doc, $entry, $resp["data"]["link"]);
 					$found = true;
+					return true;
 				}
 			}
 
@@ -68,10 +71,12 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 							_debug("(imgur) gif(v) mp4: ".$resp_gif["data"]["mp4"], $debug);
 							$inline->handle_as_video($doc, $entry, $resp_gif["data"]["mp4"], $resp_gif["data"]["link"], $debug);
 							$found = "video";
+							return true;
 						} else {
 							_debug("(imgur) gif(v) gif: ".$resp_gif["data"]["link"], $debug);
 							$inline->handle_as_image($doc, $entry, $resp_gif["data"]["link"]);
 							$found = true;
+							return true;
 						}
 					}
 
@@ -79,6 +84,7 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 						_debug("(imgur) album/gallery image ".$image["link"], $debug);
 						$inline->handle_as_image($doc, $entry, $image["link"]);
 						$found = true;
+						return true;
 					}
 				}
 			}
