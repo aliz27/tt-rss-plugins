@@ -90,7 +90,7 @@ class Af_Inline extends Plugin {
 
 		print "<p>" . __("The following hosting sites are currently supported:") . "</p>";
 
-		$comics = array();
+		$inlines = array();
 
 		foreach ($this->filters as $f) {
 			foreach ($f->supported() as $inline) {

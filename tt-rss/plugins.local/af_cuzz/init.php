@@ -52,7 +52,7 @@ class Af_Cuzz extends Plugin {
 
 		print "<p>" . __("The following hosting sites are currently supported:") . "</p>";
 
-		$comics = array();
+		$inlines = array();
 
 		foreach ($this->filters as $f) {
 			foreach ($f->supported() as $inline) {
@@ -64,7 +64,7 @@ class Af_Cuzz extends Plugin {
 
 		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
 		foreach ($inlines as $inline) {
-			print "<li>$inlines</li>";
+			print "<li>$inline</li>";
 		}
 		print "</ul>";
 
