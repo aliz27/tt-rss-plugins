@@ -165,9 +165,7 @@ class Af_Inline extends Plugin {
 					break;
 			}
 
-			return $article;
-
-/*			$found = $this->inline_stuff($article, $doc, $xpath, $debug);
+//			$found = $this->inline_stuff($article, $doc, $xpath, $debug);
 
 			$node = $doc->getElementsByTagName('body')->item(0);
 
@@ -188,8 +186,8 @@ class Af_Inline extends Plugin {
 				$article["content"] = $doc->saveXML($node);
 			}
 
+			return $article;
 		}
-*/
 	}
 
 	function api_version() {
