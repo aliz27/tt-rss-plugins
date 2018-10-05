@@ -10,6 +10,24 @@ class Af_Inline extends Plugin {
 			"aliz");
 	}
 
+	public function imgurLookup($id, $type, $debug = false) {
+                _debug("Doing imgur lookup for ".$id." of type ".$type, $debug);
+                $json = "";
+
+                $req = "https://api.imgur.com/3/".$type."/".$id;
+
+                $ch = curl_init($req);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization: ".$this->host->get($this, "imgur_auth")));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $resp = @curl_exec($ch);
+                curl_close($ch);
+
+                if ($resp) { $json = json_decode($resp, true); }
+
+                return $json;
+        }
+
+
 	public function handle_as_image($doc, $entry, $image) {
 		$img = $doc->createElement('img');
 		$img->setAttribute("src", $image);
@@ -86,30 +104,62 @@ class Af_Inline extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Hosting sites supported by af_inline')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Reddit content settings (af_redditimgur)')."\">";
 
-		print "<p>" . __("The following hosting sites are currently supported:") . "</p>";
+		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");
+		$imgur_auth = $this->host->get($this, "imgur_auth");
 
-		$inlines = array();
+		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+			print_error("Readability requires PHP version 5.6.");
+		}
 
-		foreach ($this->filters as $f) {
-			foreach ($f->supported() as $inline) {
-				array_push($inlines, $inline);
+		print "<form dojoType=\"dijit.form.Form\">";
+
+		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
+			evt.preventDefault();
+			if (this.validate()) {
+				console.log(dojo.objectToQuery(this.getValues()));
+				new Ajax.Request('backend.php', {
+					parameters: dojo.objectToQuery(this.getValues()),
+					onComplete: function(transport) {
+						notify_info(transport.responseText);
+					}
+				});
+				//this.reset();
 			}
-		}
+			</script>";
 
-		asort($inlines);
+		print_hidden("op", "pluginhandler");
+		print_hidden("method", "save");
+		print_hidden("plugin", "af_inline");
 
-		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
-		foreach ($inlines as $inline) {
-			print "<li>$inline</li>";
-		}
-		print "</ul>";
+		print_checkbox("enable_content_dupcheck", $enable_content_dupcheck);
+		print "&nbsp;<label for=\"enable_content_dupcheck\">" . __("Enable additional duplicate checking") . "</label>";
 
-		print "<p>".__('Drop any updated filters into <code>filters.local</code> in plugin directory.')."</p>";
+		print "<table width=\"100%\" class=\"prefPrefsList\">";
+
+		print "<tr><td width=\"40%\">".__("Imgur API Authorization (Client-ID xxxxx) ")."</td>";
+		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"imgur_auth\" value=\"$imgur_auth\"></td></tr>";
+
+		print "</table>";
+
+
+		print "<p>"; print_button("submit", __("Save"));
+		print "</form>";
 
 		print "</div>";
 	}
+
+	function save() {
+		$enable_readability = checkbox_to_sql_bool($_POST["enable_readability"]);
+		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]);
+
+		$this->host->set($this, "enable_readability", $enable_readability, false);
+		$this->host->set($this, "enable_content_dupcheck", $enable_content_dupcheck);
+
+		echo __("Configuration saved");
+	}
+
 
 	function hook_article_filter($article) {
 		if (strpos($article["link"], "reddit.com/r/") !== FALSE) {
