@@ -152,7 +152,7 @@ class Af_Inline extends Plugin {
 
 	function save() {
 		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]);
-		$imgur_auth = db_escape_string($_POST["tags"]);
+		$imgur_auth = db_escape_string($_POST["imgur_auth"]);
 
 		$this->host->set($this, "enable_content_dupcheck", $enable_content_dupcheck);
 		$this->host->set($this, "imgur_auth", $imgur_auth);
