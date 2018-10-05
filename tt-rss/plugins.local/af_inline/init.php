@@ -186,6 +186,12 @@ class Af_Inline extends Plugin {
 				$article["content"] = $doc->saveXML($node);
 			}
 
+			if ($found) {
+				$table = $doc->getElementsByTagName('td')->item(0);
+				if ($table)
+					$table->parentNode->removeChild($table);
+			}
+
 			return $article;
 		}
 	}
