@@ -10,7 +10,7 @@ class Af_Inline extends Plugin {
 			"aliz");
 	}
 
-	private function handle_as_image($doc, $entry, $image) {
+	public function handle_as_image($doc, $entry, $image) {
 		$img = $doc->createElement('img');
 		$img->setAttribute("src", $image);
 		$paragraph = $doc->createElement('p');
@@ -19,7 +19,7 @@ class Af_Inline extends Plugin {
 		$entry->parentNode->insertBefore($paragraph, $entry);
 	}
 
-	private function handle_as_video($doc, $entry, $source_stream, $poster_url = false, $debug = false) {
+	public function handle_as_video($doc, $entry, $source_stream, $poster_url = false, $debug = false) {
 		_debug("handle_as_video: $source_stream", $debug);
 
 		$video = $doc->createElement('video');
