@@ -7,7 +7,8 @@ class Af_Cuzz extends Plugin {
 	function about() {
 		return array(1.0,
 			"Inlines content from cuzz.cazooka.se. Based on af_comics, af_redditimgur and af_unburn.",
-			"aliz")
+			"aliz");
+	}
 
 	function flags() {
 		return array("needs_curl" => true);

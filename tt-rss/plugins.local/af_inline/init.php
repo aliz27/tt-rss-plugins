@@ -7,7 +7,8 @@ class Af_Inline extends Plugin {
 	function about() {
 		return array(1.0,
 			"Inlines content from reddit. Based on af_comics, af_redditimgur and af_unburn.",
-			"aliz")
+			"aliz");
+	}
 
 	private function handle_as_image($doc, $entry, $image) {
 		$img = $doc->createElement('img');
