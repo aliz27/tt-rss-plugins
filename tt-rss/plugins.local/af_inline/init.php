@@ -10,6 +10,23 @@ class Af_Inline extends Plugin {
 			"aliz");
 	}
 
+	public function apiCall($url) {
+		$NUM_OF_ATTEMPTS = 5;
+		$attempts = 0;
+
+		_debug("fetching url: ".$url, true);
+
+		do {
+			$resp = fetch_file_contents($url);
+			_debug("apicall debug: ".$resp, true);
+			if ($resp) { break; } else { sleep(5); }
+			$attempts++;
+		} while ($attempts < $NUM_OF_ATTEMPTS);
+
+		return $resp;
+	}
+
+
 	public function imgurLookup($id, $type, $debug = false) {
                 _debug("Doing imgur lookup for ".$id." of type ".$type, $debug);
                 $json = "";
