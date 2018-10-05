@@ -64,7 +64,7 @@ class Af_Cuzz extends Plugin {
 
 		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
 		foreach ($inlines as $inline) {
-			print "<li>$inline</li>";
+			print "<li>$inlines</li>";
 		}
 		print "</ul>";
 

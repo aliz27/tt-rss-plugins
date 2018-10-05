@@ -86,7 +86,7 @@ class Af_Inline extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Hosting sites supported by af_cuzz')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Hosting sites supported by af_inline')."\">";
 
 		print "<p>" . __("The following hosting sites are currently supported:") . "</p>";
 
@@ -102,7 +102,7 @@ class Af_Inline extends Plugin {
 
 		print "<ul class=\"browseFeedList\" style=\"border-width : 1px\">";
 		foreach ($inlines as $inline) {
-			print "<li>$inline</li>";
+			print "<li>$inlines</li>";
 		}
 		print "</ul>";
 
