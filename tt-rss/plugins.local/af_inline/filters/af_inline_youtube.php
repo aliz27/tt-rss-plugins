@@ -1,5 +1,5 @@
 <?php
-class Af_Inline_VReddIt extends Af_InlineFilter {
+class Af_Inline_Youtube extends Af_InlineFilter {
 	function supported() {
 		return array("Youtube");
 	}
