@@ -104,7 +104,7 @@ class Af_Inline extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefFeeds") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Reddit content settings (af_redditimgur)')."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__('Reddit content settings (af_inline)')."\">";
 
 		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");
 		$imgur_auth = $this->host->get($this, "imgur_auth");
@@ -151,11 +151,11 @@ class Af_Inline extends Plugin {
 	}
 
 	function save() {
-		$enable_readability = checkbox_to_sql_bool($_POST["enable_readability"]);
 		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]);
+		$imgur_auth = db_escape_string($_POST["tags"]);
 
-		$this->host->set($this, "enable_readability", $enable_readability, false);
 		$this->host->set($this, "enable_content_dupcheck", $enable_content_dupcheck);
+		$this->host->set($this, "imgur_auth", $imgur_auth);
 
 		echo __("Configuration saved");
 	}
