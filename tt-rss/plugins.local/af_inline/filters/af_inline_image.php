@@ -11,7 +11,7 @@ class Af_Inline_Image extends Af_InlineFilter {
 
 			_debug("Handling as a picture", $debug);
 
-			$this->handle_as_image($doc, $entry, $entry->getAttribute("href"));
+			$inline->handle_as_image($doc, $entry, $entry->getAttribute("href"));
 
 			$found = true;
 			return true;
