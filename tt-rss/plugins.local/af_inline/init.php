@@ -185,7 +185,7 @@ class Af_Inline extends Plugin {
 			$xpath = new DOMXPath($doc);
 
 			if ($this->host->get($this, "enable_content_dupcheck")) {
-				debug("dupecheck", $debug);
+				_debug("dupecheck", $debug);
 				$content_link = $xpath->query("(//a[text()='[link]'])")->item(0);
 
 				if ($content_link) {
@@ -211,9 +211,9 @@ class Af_Inline extends Plugin {
 							content LIKE '%href=\"$content_href\">[link]%'");
 					if ($result) {
 						$num_found = db_fetch_result($result, 0, "cid");
-						file_put_contents("/tmp/debug.log","Debug dupecheck, found : $num_found for $content_href\n", FILE_APPEND);
+//						file_put_contents("/tmp/debug.log","Debug dupecheck, found : $num_found for $content_href\n", FILE_APPEND);
 						if ($num_found > 0) {
-							file_put_contents("/tmp/debug.log","Force catchup\n", FILE_APPEND);
+//							file_put_contents("/tmp/debug.log","Force catchup\n", FILE_APPEND);
 							_debug("marking as read (dupecheck)", $debug);
 							$article["force_catchup"] = true;
 						}
