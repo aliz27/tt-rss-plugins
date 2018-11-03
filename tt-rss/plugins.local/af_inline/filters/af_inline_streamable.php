@@ -1,5 +1,5 @@
 <?php
-class Af_Inline_Gfycat extends Af_InlineFilter {
+class Af_Inline_Streamable extends Af_InlineFilter {
 	function supported() {
 		return array("Streamable");
 	}
