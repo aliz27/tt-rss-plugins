@@ -44,6 +44,23 @@ class Af_Inline extends Plugin {
                 return $json;
         }
 
+	public function gfycatLookup($id, $debug = false) {
+                _debug("Doing Gfycat lookup for ".$id, $debug);
+                $json = "";
+
+                $req = "https://api.gfycat.com/v1/gfycats/".$id;
+
+                $ch = curl_init($req);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization: ".$this->host->get($this, "gfycat_auth")));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $resp = @curl_exec($ch);
+                curl_close($ch);
+
+                if ($resp) { $json = json_decode($resp, true); }
+
+                return $json;
+        }
+
 
 	public function handle_as_image($doc, $entry, $image) {
 		$img = $doc->createElement('img');
@@ -125,6 +142,7 @@ class Af_Inline extends Plugin {
 
 		$enable_content_dupcheck = $this->host->get($this, "enable_content_dupcheck");
 		$imgur_auth = $this->host->get($this, "imgur_auth");
+		$gfycat_auth = $this->host->get($this, "gfycat_auth");
 
 		if (version_compare(PHP_VERSION, '5.6.0', '<')) {
 			print_error("Readability requires PHP version 5.6.");
@@ -158,6 +176,9 @@ class Af_Inline extends Plugin {
 		print "<tr><td width=\"40%\">".__("Imgur API Authorization (Client-ID xxxxx) ")."</td>";
 		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"imgur_auth\" value=\"$imgur_auth\"></td></tr>";
 
+		print "<tr><td width=\"40%\">".__("Gfycat API Authorization (Client-ID xxxxx) ")."</td>";
+		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"gfycat_auth\" value=\"$gfycat_auth\"></td></tr>";
+
 		print "</table>";
 
 
@@ -170,9 +191,11 @@ class Af_Inline extends Plugin {
 	function save() {
 		$enable_content_dupcheck = checkbox_to_sql_bool($_POST["enable_content_dupcheck"]);
 		$imgur_auth = db_escape_string($_POST["imgur_auth"]);
+		$gfycat_auth = db_escape_string($_POST["gfycat_auth"]);
 
 		$this->host->set($this, "enable_content_dupcheck", $enable_content_dupcheck);
 		$this->host->set($this, "imgur_auth", $imgur_auth);
+		$this->host->set($this, "gfycat_auth", $gfycat_auth);
 
 		echo __("Configuration saved");
 	}
