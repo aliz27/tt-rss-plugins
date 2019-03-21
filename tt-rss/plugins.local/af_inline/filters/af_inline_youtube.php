@@ -27,7 +27,7 @@ class Af_Inline_Youtube extends Af_InlineFilter {
 			$br = $doc->createElement('br');
 			$entry->parentNode->insertBefore($iframe, $entry);
 			$entry->parentNode->insertBefore($br, $entry);
-
+			array_push($article["tags"], "video");
 			$found = true;
 			return true;
 		}

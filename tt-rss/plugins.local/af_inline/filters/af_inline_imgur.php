@@ -13,7 +13,6 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 				_debug("(imgur) link ".$url, $debug);
 
 				$resp = $inline->imgurLookup($matches[1], "image", $debug);
-
 				$url = $resp["data"]["link"];
 			}
 
@@ -21,13 +20,13 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 				_debug("(imgur) subreddit link ".$url, $debug);
 
 				$resp = $inline->imgurLookup("/r/".$matches[1]."/".$matches[2], "gallery", $debug);
-
 				$url = $resp["data"]["link"];
 			}
 
 			if (preg_match("/\.(jpg|jpeg|png|webp)$/i", $url)) {
 				_debug("(imgur) image ".$url, $debug);
 				$inline->handle_as_image($doc, $entry, $url);
+				array_push($article["tags"], "image");
 				$found = true;
 				return true;
 			}
@@ -40,11 +39,13 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 				if ($resp["data"]["mp4"]) {
 					_debug("(imgur) gif(v) mp4: ".$resp["data"]["mp4"], $debug);
 					$inline->handle_as_video($doc, $entry, $resp["data"]["mp4"], $resp["data"]["link"], $debug);
-					$found = "video";
+					array_push($article["tags"], "video");
+					$found = true;
 					return true;
 				} else {
 					_debug("(imgur) gif(v) gif: ".$resp["data"]["link"], $debug);
 					$inline->handle_as_image($doc, $entry, $resp["data"]["link"]);
+					array_push($article["tags"], "video");
 					$found = true;
 					return true;
 				}
@@ -70,11 +71,13 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 						if ($resp_gif["data"]["mp4"]) {
 							_debug("(imgur) gif(v) mp4: ".$resp_gif["data"]["mp4"], $debug);
 							$inline->handle_as_video($doc, $entry, $resp_gif["data"]["mp4"], $resp_gif["data"]["link"], $debug);
-							$found = "video";
+							array_push($article["tags"], "video");
+							$found = true;
 							return true;
 						} else {
 							_debug("(imgur) gif(v) gif: ".$resp_gif["data"]["link"], $debug);
 							$inline->handle_as_image($doc, $entry, $resp_gif["data"]["link"]);
+							array_push($article["tags"], "image");
 							$found = true;
 							return true;
 						}
@@ -83,6 +86,7 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 					if (preg_match("/\.(jpg|jpeg|png)$/i", $image["link"])) {
 						_debug("(imgur) album/gallery image ".$image["link"], $debug);
 						$inline->handle_as_image($doc, $entry, $image["link"]);
+						array_push($article["tags"], "image");
 						$found = true;
 						return true;
 					}

@@ -11,7 +11,8 @@ class Af_Inline_Streamable extends Af_InlineFilter {
                         $resp = json_decode(fetch_file_contents($req, false, $context), true);
 
                         $inline->handle_as_video($doc, $entry, $resp["files"]["mp4"]["url"], $resp["files"]["thumbnail_url"], $debug);
-                        $found = "video";
+			array_push($article["tags"], "video");
+                        $found = "true";
 			return true;
 		}
 		return false;
