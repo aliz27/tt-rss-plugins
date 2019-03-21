@@ -202,6 +202,7 @@ class Af_Inline extends Plugin {
 
 
 	function hook_article_filter($article) {
+		$debug = true;
 		if (strpos($article["link"], "reddit.com/r/") !== FALSE) {
 			$doc = new DOMDocument();
 			@$doc->loadHTML($article["content"]);
