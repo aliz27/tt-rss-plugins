@@ -256,22 +256,7 @@ class Af_Inline extends Plugin {
 					break;
 			}
 
-//			$found = $this->inline_stuff($article, $doc, $xpath, $debug);
-
 			$node = $doc->getElementsByTagName('body')->item(0);
-
-//			$owner_uid = $article["owner_uid"];
-//			$labels = $this->get_all_labels_filter_format($owner_uid);
-
-			if ($found == "video") {
-				array_push($article["tags"], "video");
-			}
-
-			if ($found) {
-				array_push($article["tags"], "inlined");
-			} else {
-				array_push($article["tags"], "notInlined");
-			}
 
 			if ($found) {
 				$table = $doc->getElementsByTagName('td')->item(0);
