@@ -1,5 +1,5 @@
 <?php
-class Af_Cuzz_Youtube extends Af_CuzzFilter {
+class Af_Cuzz_Vimeo extends Af_CuzzFilter {
 	function supported() {
 		return array("Vimeo");
 	}
