@@ -77,7 +77,7 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 						} else {
 							_debug("(imgur) gif(v) gif: ".$resp_gif["data"]["link"], $debug);
 							$inline->handle_as_image($doc, $entry, $resp_gif["data"]["link"]);
-							array_push($article["tags"], "image");
+							array_push($article["tags"], "video");
 							$found = true;
 							return true;
 						}
