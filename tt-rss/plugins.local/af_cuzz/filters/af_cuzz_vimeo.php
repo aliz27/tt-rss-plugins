@@ -4,7 +4,7 @@ class Af_Cuzz_Youtube extends Af_CuzzFilter {
 		return array("Vimeo");
 	}
 
-	function process(&$article, &$entry, &$doc, &$found, &$inline, $debug) {
+        function process(&$article) {
 		$matches = array();
 		if (preg_match("/vimeo\.com\/([\d]+)/", $entry->getAttribute("href"), $matches) {
 
