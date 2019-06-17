@@ -9,7 +9,7 @@ class Af_Inline_Imgur extends Af_InlineFilter {
 			$url = parse_url($entry->getAttribute("href"));
 			$url = $url["scheme"]."://".$url["host"].$url["path"];
 
-			if (preg_match("/imgur\.com\/([A-Z0-9]+)[\/]?$/i", $url, $matches)) {
+			if (preg_match("/imgur\.com\/([A-Z0-9]+)/i", $url, $matches)) {
 				_debug("(imgur) link ".$url, $debug);
 
 				$resp = $inline->imgurLookup($matches[1], "image", $debug);
