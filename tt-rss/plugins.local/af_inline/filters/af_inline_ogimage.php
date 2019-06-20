@@ -21,7 +21,6 @@ class Af_Inline_OgImage extends Af_InlineFilter {
 					array_push($article["tags"], "image");
 					$found = true;
 					return true;
-                                        }
                                 }
                         }
 
