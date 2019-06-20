@@ -5,10 +5,7 @@ class Af_Inline_OgImage extends Af_InlineFilter {
 	}
 
 	function process(&$article, &$entry, &$doc, &$found, &$inline, $debug) {
-		if (preg_match("/imgflip.com\//i", $entry->getAttribute("href")) {
-/*||
-			preg_match("/i.reddituploads.com/i", $entry->getAttribute("href")) ||
-			preg_match("/i.redditmedia.com/i", $entry->getAttribute("href"))) */
+		if (preg_match("/imgflip.com\//i", $entry->getAttribute("href"))) {
 			_debug("Looking for og:image", $debug);
 			$page = fetch_file_contents($entry->getAttribute("href"));
 
