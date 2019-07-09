@@ -30,7 +30,7 @@ class Af_Youtube_Embed2 extends Plugin {
 			return "<iframe class=\"youtube-player\"
 				type=\"text/html\" width=\"640\" height=\"385\"
 				src=\"https://www.youtube.com/embed/$vid_id\"
-				allowfullscreen frameborder=\"0\"></iframe><br />".$entry["title"];
+				allowfullscreen frameborder=\"0\"></iframe><br />".$entry["title"].replace(/(?:\r\n|\r|\n)/g, '<br>');;
 
 		}
 	}
