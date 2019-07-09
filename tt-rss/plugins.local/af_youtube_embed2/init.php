@@ -3,9 +3,9 @@ class Af_Youtube_Embed2 extends Plugin {
 	private $host;
 
 	function about() {
-		return array(1.5
+		return array(2.0,
 			"Embed videos in Youtube RSS feeds",
-			"fox");
+			"fox (aliz)");
 	}
 
 	function init($host) {
