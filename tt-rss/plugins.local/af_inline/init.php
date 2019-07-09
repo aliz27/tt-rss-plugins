@@ -269,8 +269,6 @@ class Af_Inline extends Plugin {
 			}
 		}
 
-		if (strpos($article["link"], "youtube.com/r/") !== FALSE) {
-		
 		return $article;
 
 	}
