@@ -268,6 +268,9 @@ class Af_Inline extends Plugin {
 				$article["content"] = $doc->saveHTML($node);
 			}
 		}
+
+		if (strpos($article["link"], "youtube.com/r/") !== FALSE) {
+		
 		return $article;
 
 	}
